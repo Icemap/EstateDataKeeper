@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqz.estate.keeper.dao.AnjukeHouseDataMapper">
+  <resultMap id="BaseResultMap" type="com.wqz.estate.keeper.pojo.AnjukeHouseData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="imgUrl" jdbcType="VARCHAR" property="imgurl" />
+    <result column="contentUrl" jdbcType="VARCHAR" property="contenturl" />
+    <result column="roomNum" jdbcType="VARCHAR" property="roomnum" />
+    <result column="area" jdbcType="DOUBLE" property="area" />
+    <result column="flood" jdbcType="VARCHAR" property="flood" />
+    <result column="buildTime" jdbcType="INTEGER" property="buildtime" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="totalPrice" jdbcType="DOUBLE" property="totalprice" />
+    <result column="unitPrice" jdbcType="DOUBLE" property="unitprice" />
+    <result column="goodAt" jdbcType="VARCHAR" property="goodat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, imgUrl, contentUrl, roomNum, area, flood, buildTime, address, district, 
+    totalPrice, unitPrice, goodAt
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anjuke_house_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectNumByContentUrl" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select COUNT(*)
+    from anjuke_house_data
+    where contentUrl = #{contentUrl,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from anjuke_house_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wqz.estate.keeper.pojo.AnjukeHouseData">
+    insert into anjuke_house_data (id, title, imgUrl, 
+      contentUrl, roomNum, area, 
+      flood, buildTime, address, 
+      district, totalPrice, unitPrice, 
+      goodAt)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, 
+      #{contenturl,jdbcType=VARCHAR}, #{roomnum,jdbcType=VARCHAR}, #{area,jdbcType=DOUBLE}, 
+      #{flood,jdbcType=VARCHAR}, #{buildtime,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{district,jdbcType=VARCHAR}, #{totalprice,jdbcType=DOUBLE}, #{unitprice,jdbcType=DOUBLE}, 
+      #{goodat,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wqz.estate.keeper.pojo.AnjukeHouseData">
+    insert into anjuke_house_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="imgurl != null">
+        imgUrl,
+      </if>
+      <if test="contenturl != null">
+        contentUrl,
+      </if>
+      <if test="roomnum != null">
+        roomNum,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="flood != null">
+        flood,
+      </if>
+      <if test="buildtime != null">
+        buildTime,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="totalprice != null">
+        totalPrice,
+      </if>
+      <if test="unitprice != null">
+        unitPrice,
+      </if>
+      <if test="goodat != null">
+        goodAt,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="contenturl != null">
+        #{contenturl,jdbcType=VARCHAR},
+      </if>
+      <if test="roomnum != null">
+        #{roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=DOUBLE},
+      </if>
+      <if test="flood != null">
+        #{flood,jdbcType=VARCHAR},
+      </if>
+      <if test="buildtime != null">
+        #{buildtime,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null">
+        #{totalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="unitprice != null">
+        #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodat != null">
+        #{goodat,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wqz.estate.keeper.pojo.AnjukeHouseData">
+    update anjuke_house_data
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null">
+        imgUrl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="contenturl != null">
+        contentUrl = #{contenturl,jdbcType=VARCHAR},
+      </if>
+      <if test="roomnum != null">
+        roomNum = #{roomnum,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=DOUBLE},
+      </if>
+      <if test="flood != null">
+        flood = #{flood,jdbcType=VARCHAR},
+      </if>
+      <if test="buildtime != null">
+        buildTime = #{buildtime,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null">
+        totalPrice = #{totalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="unitprice != null">
+        unitPrice = #{unitprice,jdbcType=DOUBLE},
+      </if>
+      <if test="goodat != null">
+        goodAt = #{goodat,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wqz.estate.keeper.pojo.AnjukeHouseData">
+    update anjuke_house_data
+    set title = #{title,jdbcType=VARCHAR},
+      imgUrl = #{imgurl,jdbcType=VARCHAR},
+      contentUrl = #{contenturl,jdbcType=VARCHAR},
+      roomNum = #{roomnum,jdbcType=VARCHAR},
+      area = #{area,jdbcType=DOUBLE},
+      flood = #{flood,jdbcType=VARCHAR},
+      buildTime = #{buildtime,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      totalPrice = #{totalprice,jdbcType=DOUBLE},
+      unitPrice = #{unitprice,jdbcType=DOUBLE},
+      goodAt = #{goodat,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

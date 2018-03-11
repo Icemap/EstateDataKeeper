@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqz.estate.keeper.dao.LianjiaHouseDataMapper">
+  <resultMap id="BaseResultMap" type="com.wqz.estate.keeper.pojo.LianjiaHouseData">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="content_url" jdbcType="VARCHAR" property="contentUrl" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="room_num" jdbcType="VARCHAR" property="roomNum" />
+    <result column="area" jdbcType="DOUBLE" property="area" />
+    <result column="faceTo" jdbcType="VARCHAR" property="faceto" />
+    <result column="decoration" jdbcType="VARCHAR" property="decoration" />
+    <result column="hasLift" jdbcType="TINYINT" property="haslift" />
+    <result column="flood" jdbcType="VARCHAR" property="flood" />
+    <result column="buildTime" jdbcType="INTEGER" property="buildtime" />
+    <result column="structure" jdbcType="VARCHAR" property="structure" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="taxFree" jdbcType="VARCHAR" property="taxfree" />
+    <result column="totalPrice" jdbcType="DOUBLE" property="totalprice" />
+    <result column="unitPrice" jdbcType="DOUBLE" property="unitprice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, content_url, img_url, title, address, room_num, area, faceTo, decoration, hasLift, 
+    flood, buildTime, structure, district, taxFree, totalPrice, unitPrice
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lianjia_house_data
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectNumByContentUrl" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select COUNT(*)
+    from lianjia_house_data
+    where content_url = #{contentUrl,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lianjia_house_data
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wqz.estate.keeper.pojo.LianjiaHouseData">
+    insert into lianjia_house_data (id, content_url, img_url, 
+      title, address, room_num, 
+      area, faceTo, decoration, 
+      hasLift, flood, buildTime, 
+      structure, district, taxFree, 
+      totalPrice, unitPrice)
+    values (#{id,jdbcType=INTEGER}, #{contentUrl,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{roomNum,jdbcType=VARCHAR}, 
+      #{area,jdbcType=DOUBLE}, #{faceto,jdbcType=VARCHAR}, #{decoration,jdbcType=VARCHAR}, 
+      #{haslift,jdbcType=TINYINT}, #{flood,jdbcType=VARCHAR}, #{buildtime,jdbcType=INTEGER}, 
+      #{structure,jdbcType=VARCHAR}, #{district,jdbcType=VARCHAR}, #{taxfree,jdbcType=VARCHAR}, 
+      #{totalprice,jdbcType=DOUBLE}, #{unitprice,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wqz.estate.keeper.pojo.LianjiaHouseData">
+    insert into lianjia_house_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="contentUrl != null">
+        content_url,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="roomNum != null">
+        room_num,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="faceto != null">
+        faceTo,
+      </if>
+      <if test="decoration != null">
+        decoration,
+      </if>
+      <if test="haslift != null">
+        hasLift,
+      </if>
+      <if test="flood != null">
+        flood,
+      </if>
+      <if test="buildtime != null">
+        buildTime,
+      </if>
+      <if test="structure != null">
+        structure,
+      </if>
+      <if test="district != null">
+        district,
+      </if>
+      <if test="taxfree != null">
+        taxFree,
+      </if>
+      <if test="totalprice != null">
+        totalPrice,
+      </if>
+      <if test="unitprice != null">
+        unitPrice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="contentUrl != null">
+        #{contentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNum != null">
+        #{roomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=DOUBLE},
+      </if>
+      <if test="faceto != null">
+        #{faceto,jdbcType=VARCHAR},
+      </if>
+      <if test="decoration != null">
+        #{decoration,jdbcType=VARCHAR},
+      </if>
+      <if test="haslift != null">
+        #{haslift,jdbcType=TINYINT},
+      </if>
+      <if test="flood != null">
+        #{flood,jdbcType=VARCHAR},
+      </if>
+      <if test="buildtime != null">
+        #{buildtime,jdbcType=INTEGER},
+      </if>
+      <if test="structure != null">
+        #{structure,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="taxfree != null">
+        #{taxfree,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null">
+        #{totalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="unitprice != null">
+        #{unitprice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wqz.estate.keeper.pojo.LianjiaHouseData">
+    update lianjia_house_data
+    <set>
+      <if test="contentUrl != null">
+        content_url = #{contentUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNum != null">
+        room_num = #{roomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=DOUBLE},
+      </if>
+      <if test="faceto != null">
+        faceTo = #{faceto,jdbcType=VARCHAR},
+      </if>
+      <if test="decoration != null">
+        decoration = #{decoration,jdbcType=VARCHAR},
+      </if>
+      <if test="haslift != null">
+        hasLift = #{haslift,jdbcType=TINYINT},
+      </if>
+      <if test="flood != null">
+        flood = #{flood,jdbcType=VARCHAR},
+      </if>
+      <if test="buildtime != null">
+        buildTime = #{buildtime,jdbcType=INTEGER},
+      </if>
+      <if test="structure != null">
+        structure = #{structure,jdbcType=VARCHAR},
+      </if>
+      <if test="district != null">
+        district = #{district,jdbcType=VARCHAR},
+      </if>
+      <if test="taxfree != null">
+        taxFree = #{taxfree,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null">
+        totalPrice = #{totalprice,jdbcType=DOUBLE},
+      </if>
+      <if test="unitprice != null">
+        unitPrice = #{unitprice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wqz.estate.keeper.pojo.LianjiaHouseData">
+    update lianjia_house_data
+    set content_url = #{contentUrl,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      room_num = #{roomNum,jdbcType=VARCHAR},
+      area = #{area,jdbcType=DOUBLE},
+      faceTo = #{faceto,jdbcType=VARCHAR},
+      decoration = #{decoration,jdbcType=VARCHAR},
+      hasLift = #{haslift,jdbcType=TINYINT},
+      flood = #{flood,jdbcType=VARCHAR},
+      buildTime = #{buildtime,jdbcType=INTEGER},
+      structure = #{structure,jdbcType=VARCHAR},
+      district = #{district,jdbcType=VARCHAR},
+      taxFree = #{taxfree,jdbcType=VARCHAR},
+      totalPrice = #{totalprice,jdbcType=DOUBLE},
+      unitPrice = #{unitprice,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

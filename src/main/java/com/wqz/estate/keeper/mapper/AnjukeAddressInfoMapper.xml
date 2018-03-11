@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqz.estate.keeper.dao.AnjukeAddressInfoMapper">
+  <resultMap id="BaseResultMap" type="com.wqz.estate.keeper.pojo.AnjukeAddressInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="lon" jdbcType="DOUBLE" property="lon" />
+    <result column="lat" jdbcType="DOUBLE" property="lat" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, address, lon, lat
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anjuke_address_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectNumByName" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select COUNT(*)
+    from anjuke_address_info
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByRect" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anjuke_address_info
+    where lon &lt; #{eLonMax}
+      and lon &gt; #{eLonMin}
+      and lat &lt; #{eLatMax}
+      and lat &gt; #{eLatMin}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from anjuke_address_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wqz.estate.keeper.pojo.AnjukeAddressInfo">
+    insert into anjuke_address_info (id, name, address, 
+      lon, lat)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{lon,jdbcType=DOUBLE}, #{lat,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wqz.estate.keeper.pojo.AnjukeAddressInfo">
+    insert into anjuke_address_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="lon != null">
+        lon,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        #{lon,jdbcType=DOUBLE},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wqz.estate.keeper.pojo.AnjukeAddressInfo">
+    update anjuke_address_info
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="lon != null">
+        lon = #{lon,jdbcType=DOUBLE},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wqz.estate.keeper.pojo.AnjukeAddressInfo">
+    update anjuke_address_info
+    set name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      lon = #{lon,jdbcType=DOUBLE},
+      lat = #{lat,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
