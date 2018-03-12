@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wqz.estate.keeper.bean.AddressBean;
 import com.wqz.estate.keeper.bean.PointBean;
 import com.wqz.estate.keeper.service.impl.AnalysisServiceImpl;
@@ -56,13 +58,15 @@ public class AddressAnalysisController
 
 	@ResponseBody
 	@RequestMapping("/limit/polygon")
-	public List<AddressBean> getDrawLimitAddressList(List<PointBean> pointList)
+	public List<AddressBean> getDrawLimitAddressList(String jsonPointList)
 	{
+		List<PointBean> pointList = new Gson().fromJson(jsonPointList, 
+				new TypeToken<List<PointBean>>(){}.getType());
 		return analysisServiceImpl.getDrawLimitAddressList(pointList);
 	}
 	
 	@ResponseBody
-	@RequestMapping("/rect")
+	@RequestMapping("/limit/rect")
 	public List<AddressBean> getRectLimitAddressList(Double eLonMin,
 			Double eLonMax, Double eLatMin, Double eLatMax)
 	{

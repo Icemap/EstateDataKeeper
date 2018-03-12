@@ -27,7 +27,7 @@
   <select id="selectByRect" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from anjuke_address_info
+    from lianjia_address_info
     where lon &lt; #{eLonMax}
       and lon &gt; #{eLonMin}
       and lat &lt; #{eLatMax}
