@@ -31,6 +31,13 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
+  <select id="selectByAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anjuke_house_data
+    where address = #{address,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectNumByContentUrl" parameterType="java.lang.String" resultType="java.lang.Integer">
     select COUNT(*)
     from lianjia_house_data

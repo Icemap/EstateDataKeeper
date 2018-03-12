@@ -1,5 +1,7 @@
 package com.wqz.estate.keeper.dao;
 
+import java.util.List;
+
 import com.wqz.estate.keeper.pojo.AnjukeHouseData;
 
 public interface AnjukeHouseDataMapper {
@@ -16,4 +18,6 @@ public interface AnjukeHouseDataMapper {
     int updateByPrimaryKey(AnjukeHouseData record);
 
     Integer selectNumByContentUrl(String contentUrl);
+    
+    List<AnjukeHouseData> selectByAddress(String address);
 }

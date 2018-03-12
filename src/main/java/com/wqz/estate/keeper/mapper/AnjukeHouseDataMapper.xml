@@ -20,6 +20,13 @@
     id, title, imgUrl, contentUrl, roomNum, area, flood, buildTime, address, district, 
     totalPrice, unitPrice, goodAt
   </sql>
+  <select id="selectByAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anjuke_house_data
+    where address = #{address,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

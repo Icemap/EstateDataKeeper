@@ -19,12 +19,46 @@ public class AddressAnalysisController
 	AnalysisServiceImpl analysisServiceImpl;
 	
 	@ResponseBody
-	@RequestMapping("/time/bus")
+	@RequestMapping("/limit/busTime")
 	public List<AddressBean> getBusTimeLimitAddressList(Integer mins,
 			Double originLon, Double originLat)
 	{
 		return analysisServiceImpl.getBusTimeLimitAddressList(
 				mins, new PointBean(originLon, originLat));
+	}
+	
+	@ResponseBody
+	@RequestMapping("/limit/transfer")
+	public List<AddressBean> getTransferLimitAddressList(
+			Integer transferNum, Double originLon, Double originLat)
+	{
+		return analysisServiceImpl.getTransferLimitAddressList(
+				transferNum, new PointBean(originLon, originLat));
+	}
+
+	@ResponseBody
+	@RequestMapping("/limit/transferAndBusTime")
+	public List<AddressBean> getTransferAndBusTimeLimitAddressList(
+			Integer transferNum, Integer mins, Double originLon, Double originLat)
+	{
+		return analysisServiceImpl.getTransferAndBusTimeLimitAddressList(
+				transferNum, mins, new PointBean(originLon, originLat));
+	}
+
+	@ResponseBody
+	@RequestMapping("/limit/length")
+	public List<AddressBean> getLengthLimitAddressList(Integer length,
+			Double originLon, Double originLat)
+	{
+		return analysisServiceImpl.getLengthLimitAddressList(
+				length, new PointBean(originLon, originLat));
+	}
+
+	@ResponseBody
+	@RequestMapping("/limit/polygon")
+	public List<AddressBean> getDrawLimitAddressList(List<PointBean> pointList)
+	{
+		return analysisServiceImpl.getDrawLimitAddressList(pointList);
 	}
 	
 	@ResponseBody

@@ -9,6 +9,7 @@ public interface AnalysisService
 {
 	List<AddressBean> getBusTimeLimitAddressList(Integer mins, PointBean origin);
 	List<AddressBean> getTransferLimitAddressList(Integer transferNum, PointBean origin);
+	List<AddressBean> getTransferAndBusTimeLimitAddressList(Integer transferNum, Integer mins, PointBean origin);
 	List<AddressBean> getLengthLimitAddressList(Integer length, PointBean origin);
 	
 	List<AddressBean> getDrawLimitAddressList(List<PointBean> pointList);
