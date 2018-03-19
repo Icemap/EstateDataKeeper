@@ -144,4 +144,71 @@ public class AnalysisServiceImpl implements AnalysisService
 		
 		return result;
 	}
+	
+	//Rect, Free, Circle, TransNum, BusTime
+	@Override
+	public List<AddressBean> getLimitAddressListByParam(
+			Double eLonMin, Double eLonMax, Double eLatMin, Double eLatMax,
+			List<PointBean> pointList, 
+			Integer length, 
+			Integer transferNum, 
+			Integer mins,
+			PointBean origin)
+	{
+		List<AddressBean> resultList = null;
+		
+		//Rect
+		if(eLonMin != null && eLonMax != null 
+				&& eLatMin != null && eLatMax != null)
+			resultList = getRectLimitAddressList(eLonMin, eLonMax, eLatMin, eLatMax);
+		
+		//Free
+		if(pointList != null && pointList.size() != 0)
+		{
+			if(resultList == null)
+				resultList = getDrawLimitAddressList(pointList);
+			else
+				resultList = CalcUtils.limitByPolygonAddressList(pointList, resultList);
+		}
+		
+		//Base
+		if(origin == null) return resultList;
+		PointBean originMoc = CoodUtils.lonLatToMercator(origin.lon, origin.lat);
+		
+		//Circle
+		if(length != null)
+		{
+			if(resultList == null)
+				resultList = getLengthLimitAddressList(length, origin);
+			else
+			{
+				List<AddressBean> tempList = new ArrayList<>();
+				for(AddressBean bean : resultList)
+				{
+					if(length > CalcUtils.getLength(originMoc, bean))
+						tempList.add(bean);
+				}
+				resultList = tempList;
+			}
+		}
+		
+		//BusTime
+		if(mins != null)
+		{
+			if(resultList == null)
+				resultList = getBusTimeLimitAddressList(mins, origin);
+			else
+				resultList = AMapPointsUtils.multiThreadLimitByBusTime(resultList, mins * 60, origin);
+		}
+		
+		//BusTransfer
+		if(transferNum != null)
+		{
+			if(resultList == null)
+				resultList = getTransferLimitAddressList(transferNum, origin);
+			else
+				resultList = AMapPointsUtils.multiThreadLimitByTransferNum(resultList, transferNum, origin);
+		}
+		return resultList;
+	}
 }

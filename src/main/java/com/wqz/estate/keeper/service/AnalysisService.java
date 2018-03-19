@@ -15,4 +15,12 @@ public interface AnalysisService
 	List<AddressBean> getDrawLimitAddressList(List<PointBean> pointList);
 	List<AddressBean> getRectLimitAddressList(Double eLonMin, Double eLonMax,
     		Double eLatMin, Double eLatMax);
+	
+	List<AddressBean> getLimitAddressListByParam(
+			Double eLonMin, Double eLonMax, Double eLatMin, Double eLatMax,
+			List<PointBean> pointList, 
+			Integer length, 
+			Integer transferNum, 
+			Integer mins,
+			PointBean origin);
 }

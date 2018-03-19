@@ -40,10 +40,34 @@
     where contentUrl = #{contentUrl,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectByParam" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from anjuke_house_data
+    where address in 
+	<foreach collection="addressList" item="address" index="index"  
+	    open="(" close=")" separator=",">  
+	    #{address}  
+	</foreach>
+	<if test="price != null">
+		and totalPrice &lt; #{price}
+	</if>
+	<if test="unitPrice != null">
+		and unitPrice &lt; #{unitPrice}
+	</if>
+	<if test="roomNum != null">
+		and roomNum like "%"#{roomNum}"%"
+	</if>
+	<if test="buildTime != null">
+		and buildTime &gt; #{buildTime}
+	</if>
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from anjuke_house_data
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="com.wqz.estate.keeper.pojo.AnjukeHouseData">
     insert into anjuke_house_data (id, title, imgUrl, 
       contentUrl, roomNum, area, 

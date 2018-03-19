@@ -24,6 +24,7 @@
     id, content_url, img_url, title, address, room_num, area, faceTo, decoration, hasLift, 
     flood, buildTime, structure, district, taxFree, totalPrice, unitPrice
   </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -42,6 +43,29 @@
     select COUNT(*)
     from lianjia_house_data
     where content_url = #{contentUrl,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByParam" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lianjia_house_data
+    where address in 
+	<foreach collection="addressList" item="address" index="index"  
+	    open="(" close=")" separator=",">  
+	    #{address}  
+	</foreach>
+	<if test="price != null">
+		and totalPrice &lt; #{price}
+	</if>
+	<if test="unitPrice != null">
+		and unitPrice &lt; #{unitPrice}
+	</if>
+	<if test="roomNum != null">
+		and room_num like "%"#{roomNum}"%"
+	</if>
+	<if test="buildTime != null">
+		and buildTime &gt; #{buildTime}
+	</if>
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

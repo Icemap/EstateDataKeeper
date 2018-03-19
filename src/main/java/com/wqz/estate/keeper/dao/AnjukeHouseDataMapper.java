@@ -2,6 +2,8 @@ package com.wqz.estate.keeper.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.wqz.estate.keeper.pojo.AnjukeHouseData;
 
 public interface AnjukeHouseDataMapper {
@@ -20,4 +22,11 @@ public interface AnjukeHouseDataMapper {
     Integer selectNumByContentUrl(String contentUrl);
     
     List<AnjukeHouseData> selectByAddress(String address);
+    
+    List<AnjukeHouseData> selectByParam(
+    		@Param("addressList")List<String> addressList,
+    		@Param("price")Double price, 
+    		@Param("unitPrice")Double unitPrice,
+    		@Param("roomNum")String roomNum, 
+    		@Param("buildTime")Integer buildTime);
 }

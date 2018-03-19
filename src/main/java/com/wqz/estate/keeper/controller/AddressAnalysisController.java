@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.wqz.estate.keeper.bean.AddressBean;
 import com.wqz.estate.keeper.bean.PointBean;
 import com.wqz.estate.keeper.service.impl.AnalysisServiceImpl;
+import com.wqz.estate.keeper.utils.StringUtils;
 
 @Controller
 @RequestMapping("/analysis")
@@ -72,5 +73,25 @@ public class AddressAnalysisController
 	{
 		return analysisServiceImpl.getRectLimitAddressList(
 				eLonMin, eLonMax, eLatMin, eLatMax);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/limit/param")
+	public List<AddressBean> getParamLimitAddressList(
+			Double eLonMin, Double eLonMax, Double eLatMin, Double eLatMax,
+			String jsonPointList, 
+			Integer length, 
+			Integer transferNum, 
+			Integer mins,
+			Double originLon, Double originLat)
+	{
+		return analysisServiceImpl.getLimitAddressListByParam(
+				eLonMin, eLonMax, eLatMin, eLatMax, 
+				StringUtils.isNullOrEmpty(jsonPointList) ? 
+						null : new Gson().fromJson(jsonPointList,
+								new TypeToken<List<PointBean>>(){}.getType()),
+				length, transferNum, mins, 
+				originLon == null || originLat == null ? 
+						null : new PointBean(originLon, originLat));
 	}
 }
