@@ -29,4 +29,8 @@ public interface LianjiaHouseDataMapper {
     		@Param("unitPrice")Double unitPrice,
     		@Param("roomNum")String roomNum, 
     		@Param("buildTime")Integer buildTime);
+    
+    List<String> selectAllContent();
+    
+    int deleteByContentUrls(@Param("contentUrls")List<String> contentUrls);
 }

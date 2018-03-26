@@ -45,6 +45,11 @@
     where content_url = #{contentUrl,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectAllContent" resultType="java.lang.String">
+    select content_url
+    from lianjia_house_data
+  </select>
+  
   <select id="selectByParam" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -72,6 +77,16 @@
     delete from lianjia_house_data
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
+  <delete id="deleteByContentUrls">
+    delete from lianjia_house_data
+    where content_url in
+    <foreach collection="contentUrls" item="contentUrl" index="index"  
+	    open="(" close=")" separator=",">  
+	    #{contentUrl}
+	</foreach>
+  </delete>
+  
   <insert id="insert" parameterType="com.wqz.estate.keeper.pojo.LianjiaHouseData">
     insert into lianjia_house_data (id, content_url, img_url, 
       title, address, room_num, 

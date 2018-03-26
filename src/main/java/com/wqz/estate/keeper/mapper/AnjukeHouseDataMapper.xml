@@ -40,6 +40,11 @@
     where contentUrl = #{contentUrl,jdbcType=VARCHAR}
   </select>
   
+  <select id="selectAllContent" resultType="java.lang.String">
+    select contentUrl
+    from anjuke_house_data
+  </select>
+  
   <select id="selectByParam" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -66,6 +71,15 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from anjuke_house_data
     where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByContentUrls">
+    delete from anjuke_house_data
+    where contentUrl in
+    <foreach collection="contentUrls" item="contentUrl" index="index"  
+	    open="(" close=")" separator=",">  
+	    #{contentUrl}
+	</foreach>
   </delete>
   
   <insert id="insert" parameterType="com.wqz.estate.keeper.pojo.AnjukeHouseData">

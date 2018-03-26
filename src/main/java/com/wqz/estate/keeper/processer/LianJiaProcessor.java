@@ -3,6 +3,7 @@ package com.wqz.estate.keeper.processer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -88,21 +89,44 @@ public class LianJiaProcessor
 	
 	public void getAllPage()
 	{
+		List<String> allDBData = lianjiaHouseDataMapper.selectAllContent();
+		List<LianJiaItemBean> allPagesData = new ArrayList<>();
 		for(int i = 0;i < 100; i++)
 		{
-			List<LianJiaItemBean> itemList = getLianJiaPage("https://" + 
-					ParamUtils.cityPinYinSimple + ".lianjia.com/ershoufang/pg" + i);
-			
-			for(LianJiaItemBean item : itemList)
-			{
-				if(lianjiaHouseDataMapper.selectNumByContentUrl(item.contentUrl) == 0)
-					lianjiaHouseDataMapper.insertSelective(
-							lianJiaItemBean2LianjiaHouseData(item));
-				
-				if(lianjiaAddressInfoMapper.selectNumByName(item.address) == 0)
-					lianjiaAddressInfoMapper.insertSelective(getLianJiaAddress(item.address));
-			}
+			allPagesData.addAll(getLianJiaPage("https://" + 
+					ParamUtils.cityPinYinSimple + ".lianjia.com/ershoufang/pg" + i));
 		}
+		
+		//差异分析
+		for(Iterator<LianJiaItemBean> it = allPagesData.iterator(); it.hasNext();) 
+		{
+		     LianJiaItemBean bean = it.next();
+		     if(checkAndDeleteString(allDBData, bean))
+		    	 it.remove();
+		}
+		
+		//allDBData 为需要删除的集合， allPagesData为需要增加的集合
+		lianjiaHouseDataMapper.deleteByContentUrls(allDBData);
+		
+		for(LianJiaItemBean item : allPagesData)
+		{
+			if(lianjiaHouseDataMapper.selectNumByContentUrl(item.contentUrl) == 0)
+				lianjiaHouseDataMapper.insertSelective(
+						lianJiaItemBean2LianjiaHouseData(item));
+			
+			if(lianjiaAddressInfoMapper.selectNumByName(item.address) == 0)
+				lianjiaAddressInfoMapper.insertSelective(getLianJiaAddress(item.address));
+		}
+	}
+	
+	private Boolean checkAndDeleteString(List<String> allDBData, LianJiaItemBean bean)
+	{
+		if(allDBData.contains(bean.contentUrl))
+		{
+			allDBData.remove(allDBData.indexOf(bean.contentUrl));
+			return true;
+		}
+		return false;
 	}
 	
 	private LianjiaAddressInfo getLianJiaAddress(String addressName)
@@ -220,13 +244,26 @@ public class LianJiaProcessor
 	
 	private String getBuildMultiDataItem(BuildMultiDataType type, String buildData)
 	{
+		Boolean hasBrace = buildData.contains(")");
+		
 		switch(type)
 		{
 		case Flood:
-			return buildData.split("\\)")[0] + ")";
+			if(hasBrace)
+				return buildData.split("\\)")[0] + ")";
+			else
+				return buildData.split("层")[0] + "层";
 		case BuildTime:
-			if(!buildData.contains("年")) return "";
-			return buildData.split("\\)")[1].split("年")[0];
+			if(hasBrace)
+			{
+				if(!buildData.contains("年")) return "";
+				return buildData.split("\\)")[1].split("年")[0];
+			}
+			else
+			{
+				if(!buildData.contains("年")) return "";
+				return buildData.split("层")[1].split("年")[0];
+			}
 		case Structure:
 			if(!buildData.contains("年"))
 				return buildData.split("\\)")[1].split("-")[0].trim();
